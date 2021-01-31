@@ -8,47 +8,53 @@
         Select,
         SelectItem,
         Button,
+        TextArea,
+        TextInput
     } from "carbon-components-svelte";
+
+    let type = "route";
+    let key;
+    let database = "ALTDB";
+    let generatedObject;
+    let descr;
+
+    $: {
+        if (key) {
+            generatedObject = type + ": " + key;
+            if (descr) {
+                generatedObject += "\ndescr: " + descr;
+            }
+
+            generatedObject += "\nsource: " + database;
+        } else { // If primary key is empty, zero the object
+            generatedObject = "";
+        }
+    }
 </script>
 
 <Form on:submit>
+    <h2>Creating a new <u>{type}</u> object in <u>{database}</u></h2>
+    <br>
+
     <FormGroup>
-        <Select id="select-1" labelText="Select menu" value="placeholder-item">
-            <SelectItem
-                    disabled
-                    hidden
-                    value="placeholder-item"
-                    text="Choose an option"
-            />
+        <Select labelText="Object type" bind:selected={type}>
             <SelectItem value="route" text="route" />
             <SelectItem value="route6" text="route6" />
         </Select>
+
+        <Select labelText="Database" value="placeholder-item" bind:selected={type}>
+            <SelectItem value="ALTDB" text="ALTDB" />
+            <SelectItem value="RIPE" text="RIPE" />
+        </Select>
     </FormGroup>
 
-    <FormGroup legendText="Checkboxes">
-        <Checkbox id="checkbox-0" labelText="Checkbox Label" checked />
-        <Checkbox id="checkbox-1" labelText="Checkbox Label" />
-        <Checkbox id="checkbox-2" labelText="Checkbox Label" disabled />
+    <FormGroup>
+        <TextInput labelText="Primary Key" bind:value={key}/>
+        <TextInput labelText="Description" bind:value={descr}/>
     </FormGroup>
-    <FormGroup legendText="Radio buttons">
-        <RadioButtonGroup name="radio-button-group" selected="default-selected">
-            <RadioButton
-                    id="radio-1"
-                    value="standard"
-                    labelText="Standard Radio Button"
-            />
-            <RadioButton
-                    id="radio-2"
-                    value="default-selected"
-                    labelText="Default Selected Radio Button"
-            />
-            <RadioButton
-                    id="radio-4"
-                    value="disabled"
-                    labelText="Disabled Radio Button"
-                    disabled
-            />
-        </RadioButtonGroup>
+
+    <FormGroup>
+        <TextArea labelText="Generated Object" bind:value={generatedObject} />
     </FormGroup>
 
     <Button type="submit">Submit</Button>
