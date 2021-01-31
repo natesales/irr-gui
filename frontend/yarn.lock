@@ -134,18 +134,18 @@ builtin-modules@^3.1.0:
   resolved "https://registry.npmjs.org/builtin-modules/-/builtin-modules-3.1.0.tgz#aad97c15131eb76b65b50ef208e7584cd76a7484"
   integrity sha512-k0KL0aWZuBt2lrxrcASWDfwOLMnodeQjodT/1SxEQAXsHANgo6ZC/VEaSEHCXt7aSTZ4/4H5LKa+tBXmW7Vtvw==
 
-carbon-components-svelte@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.npmjs.org/carbon-components-svelte/-/carbon-components-svelte-0.12.0.tgz#d35e9b4f573dba324a134aabbd53dd93805c7c28"
-  integrity sha512-VLDzz3Kqq7bxBrPM6ogLbYSnYl3m1PYzehy3lwiH2vSqT1+1FqvBG4z/rt00TV2IXgdNxbbrnOu6QOYsqaOdqg==
+carbon-components-svelte@^0.26.0:
+  version "0.26.0"
+  resolved "https://registry.yarnpkg.com/carbon-components-svelte/-/carbon-components-svelte-0.26.0.tgz#6b3ff3fe20ad508b5f217c513c9493e33f415812"
+  integrity sha512-F4/FZCfhNXeSJijBkrMpGFyhG9tnOM91psmkZo140pwlMVHmI14ae1cdxTki0riSon2Hcu1TGCPVK36fgcM4pQ==
   dependencies:
-    carbon-icons-svelte "^10.15.0"
+    carbon-icons-svelte "^10.21.0"
     flatpickr "4.6.3"
 
-carbon-icons-svelte@^10.15.0:
-  version "10.17.0"
-  resolved "https://registry.npmjs.org/carbon-icons-svelte/-/carbon-icons-svelte-10.17.0.tgz#f7559f58be9c789097ea4035e52dbc4c12691d45"
-  integrity sha512-as1RN87YLvF7iepGAGWQOk2oleyb4w17BoHSYyQgE3MceOla04YdSWASK5c22XZZnmMJbbrT17Z34Cl70niz0Q==
+carbon-icons-svelte@^10.21.0:
+  version "10.23.0"
+  resolved "https://registry.yarnpkg.com/carbon-icons-svelte/-/carbon-icons-svelte-10.23.0.tgz#066a95e98c8c6ac592c920604241aa5f59b8ed52"
+  integrity sha512-jjJXfCDF23QM9lFJDlwRFp6Z8Ar/atT167WNcUEJpn6h7soX1jk9Uexnr1/7GX2QtjhAvVl5S7wHZrPO7cLOrQ==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -232,7 +232,7 @@ fill-range@^7.0.1:
 
 flatpickr@4.6.3:
   version "4.6.3"
-  resolved "https://registry.npmjs.org/flatpickr/-/flatpickr-4.6.3.tgz#15a8b76b6e34e3a072861250503a5995b9d3bc60"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.6.3.tgz#15a8b76b6e34e3a072861250503a5995b9d3bc60"
   integrity sha512-007VucCkqNOMMb9ggRLNuJowwaJcyOh4sKAFcdGfahfGc7JQbf94zSzjdBq/wVyHWUEs5o3+idhFZ0wbZMRmVQ==
 
 fs.realpath@^1.0.0:
