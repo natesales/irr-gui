@@ -8,7 +8,7 @@
     let filteredObjects = [];
 
     onMount(() => {
-        fetch("https://localhost/api/query", {
+        fetch("/query", {
             method: "POST",
             body: JSON.stringify({
                 "inverse": "origin",

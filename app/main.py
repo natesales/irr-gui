@@ -3,6 +3,7 @@ import socket
 from typing import List, Optional
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from rich.console import Console
 
@@ -11,7 +12,7 @@ WHOIS_ENCODING = "utf-8"
 
 console = Console()
 app = FastAPI()
-
+app.mount("/static", StaticFiles(directory="frontend/public/"), name="static")
 
 class Query(BaseModel):
     inverse: Optional[str]
