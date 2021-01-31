@@ -8,6 +8,14 @@ Web UI for IRR object management.
 
 ![Screenshot](screenshot.png)
 
+### Installation
+irr-gui is available as a [Docker image](https://hub.docker.com/r/natesales/irr-gui) for easy installation. A simple [compose file](https://github.com/natesales/irr-gui/blob/master/docker-compose.yml) is also provided if you're looking to go that route.
+
+### One line quickstart
+```bash
+docker run -p 80:80 -e IRRGUI_ASN=34553 -e 'IRRGUI_NETWORK_NAME=Nathan Sales' -e IRRGUI_IRR_SERVER=rr.ntt.net natesales/irr-gui:latest
+```
+
 ### Environment variables
 | Name                | Usage                        |
 | ------------------- | ---------------------------- |
