@@ -3,7 +3,7 @@
     import CheckmarkOutline20 from "carbon-icons-svelte/lib/CheckmarkOutline20";
     import MisuseOutline20 from "carbon-icons-svelte/lib/MisuseOutline20";
     import {onMount} from "svelte";
-    import {tab} from "../stores";
+    import {tab, asn, name} from "../stores";
 
     let objects;
     let searchQuery;
@@ -16,7 +16,7 @@
             method: "POST",
             body: JSON.stringify({
                 "inverse": "origin",
-                "value": "AS34553"
+                "value": "AS" + $asn
             })
         })
             .then(resp => resp.json())
@@ -37,7 +37,18 @@
             })
     }
 
-    onMount(() => fetchObjects(true, true)) // show RPKI and ARIN-WHOIS objects by default
+    onMount(() => {
+        fetch("/system")
+            .then(resp => resp.json())
+            .then(data => {
+                $asn = data.asn
+                $name = data.name
+            })
+            .then(() => {
+                fetchObjects(true, true) // show RPKI and ARIN-WHOIS objects by default
+            })
+    });
+
     $: fetchObjects(showRPKI, showARINWhois)
 
     $: {

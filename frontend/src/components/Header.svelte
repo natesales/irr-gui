@@ -6,7 +6,8 @@
     HeaderGlobalAction,
   } from "carbon-components-svelte";
   import LogoGithub20 from "carbon-icons-svelte/lib/LogoGithub20";
-  import { getContext } from "svelte";
+  import {getContext} from "svelte";
+  import {asn, name} from "../stores";
 
   const ctx = getContext("Theme");
 
@@ -21,7 +22,7 @@
   }
 </script>
 
-<Header company="IRR GUI" platformName="Responsive web UI for IRR object management" href="/">
+<Header company="IRR GUI" platformName="AS{$asn} {$name}" href="/">
   <div slot="skip-to-content">
     <SkipToContent />
   </div>

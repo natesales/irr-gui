@@ -1,5 +1,6 @@
 import secrets
 import socket
+from os import environ
 from typing import List, Optional
 
 from fastapi import FastAPI
@@ -7,12 +8,26 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from rich.console import Console
 
+console = Console()
+
+if not environ.get("IRRGUI_ASN"):
+    console.log("Required environment variable IRRGUI_ASN is not defined")
+    exit(1)
+
+if not environ.get("IRRGUI_NETWORK_NAME"):
+    console.log("Required environment variable IRRGUI_NETWORK_NAME is not defined")
+    exit(1)
+
+if not environ.get("IRRGUI_IRR_SERVER"):
+    console.log("Required environment variable IRRGUI_IRR_SERVER is not defined")
+    exit(1)
+
 # Constants
 WHOIS_ENCODING = "utf-8"
 
-console = Console()
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="frontend/public/"), name="static")
+
 
 class Query(BaseModel):
     inverse: Optional[str]
@@ -66,6 +81,14 @@ def whois(server: str, query: str) -> List[dict]:
     return _objects
 
 
+@app.get("/system")
+def get_system_info():
+    return {
+        "asn": environ["IRRGUI_ASN"],
+        "name": environ["IRRGUI_NETWORK_NAME"]
+    }
+
+
 @app.post("/query")
 async def run_query(query: Query):
     query_str: str = ""
@@ -74,4 +97,4 @@ async def run_query(query: Query):
     if query.inverse:
         query_str += f"-i {query.inverse} {query.value}"
 
-    return whois("rr.ntt.net", query_str.strip(" "))
+    return whois(environ["IRRGUI_IRR_SERVER"], query_str.strip(" "))

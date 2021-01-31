@@ -1,3 +1,4 @@
-aiofiles
-fastapi
-rich
+aiofiles~=0.6.0
+fastapi~=0.63.0
+rich~=9.5.1
+pydantic~=1.7.3
