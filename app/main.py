@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from rich.console import Console
+from starlette.responses import RedirectResponse
 
 console = Console()
 
@@ -79,6 +80,11 @@ def whois(server: str, query: str) -> List[dict]:
         s.close()
 
     return _objects
+
+
+@app.get("/")
+def index():
+    return RedirectResponse(url="/static/index.html")
 
 
 @app.get("/system")
