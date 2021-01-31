@@ -6,6 +6,7 @@
     HeaderGlobalAction,
   } from "carbon-components-svelte";
   import LogoGithub20 from "carbon-icons-svelte/lib/LogoGithub20";
+  import HelpFilled20 from "carbon-icons-svelte/lib/HelpFilled20";
   import {getContext} from "svelte";
   import {asn, name} from "../stores";
 
@@ -27,6 +28,7 @@
     <SkipToContent />
   </div>
   <HeaderUtilities>
+    <HeaderGlobalAction aria-label="API Docs" icon="{HelpFilled20}" on:click={() => window.location = "/redoc"}/>
     <HeaderGlobalAction aria-label="GitHub Repo" icon="{LogoGithub20}" on:click={() => window.location = "https://github.com/natesales/irr-gui"}/>
   </HeaderUtilities>
 </Header>
