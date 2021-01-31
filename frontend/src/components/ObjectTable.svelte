@@ -1,8 +1,10 @@
 <script>
-    import {Button, DataTable, Toolbar, ToolbarContent, Loading} from "carbon-components-svelte";
+    import {Button, DataTable, Toolbar, ToolbarContent, Loading, ToolbarSearch} from "carbon-components-svelte";
     import {onMount} from "svelte";
 
     let objects;
+    let searchQuery;
+    let filteredObjects = [];
 
     onMount(() => {
         fetch("https://localhost/api/query", {
@@ -15,8 +17,22 @@
             .then(resp => resp.json())
             .then(data => {
                 objects = data
+                filteredObjects = data
             })
     })
+
+    $: {
+        if (objects && searchQuery) {
+            filteredObjects = []; // Empty array
+            for (const i in objects) {
+                if (objects[i]["custom-primary-key"].includes(searchQuery)) {
+                    filteredObjects.push(objects[i]);
+                }
+            }
+        } else {
+            filteredObjects = objects;
+        }
+    }
 </script>
 
 <main>
@@ -29,7 +45,7 @@
                     { key: "custom-maintainers", value: "Maintainers"},
                     { key: "source", value: "Source"}
                 ]}
-                rows={objects}
+                bind:rows={filteredObjects}
                 sortable
         >
 
@@ -44,7 +60,7 @@
             <Toolbar>
                 <ToolbarContent>
                     <!--                TODO: Implement search -->
-                    <!--                <ToolbarSearch/>-->
+                    <ToolbarSearch bind:value={searchQuery}/>
                     <!--                <ToolbarMenu>-->
                     <!--                    <ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>-->
                     <!--                    <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">API documentation</ToolbarMenuItem>-->
