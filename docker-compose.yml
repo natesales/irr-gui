@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  irrgui:
+    image: natesales/irr-gui:latest
+    ports:
+      - "80:80"
+    environment:
+      - IRRGUI_ASN=34553
+      - IRRGUI_NETWORK_NAME=Nathan Sales
+      - IRRGUI_IRR_SERVER=rr.ntt.net
