@@ -42,7 +42,7 @@
             <SelectItem value="route6" text="route6" />
         </Select>
 
-        <Select labelText="Database" value="placeholder-item" bind:selected={type}>
+        <Select labelText="Database" value="placeholder-item" bind:selected={database}>
             <SelectItem value="ALTDB" text="ALTDB" />
             <SelectItem value="RIPE" text="RIPE" />
         </Select>
