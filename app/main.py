@@ -26,7 +26,7 @@ if not environ.get("IRRGUI_IRR_SERVER"):
 # Constants
 WHOIS_ENCODING = "utf-8"
 
-app = FastAPI(title="IRR GUI", description="Web UI for IRR object management")
+app = FastAPI(title="IRR GUI", description="Web UI for IRR object management", version="0.0.1")
 app.mount("/static", StaticFiles(directory="frontend/public/"), name="static")
 
 
