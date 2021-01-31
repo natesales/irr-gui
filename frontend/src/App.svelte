@@ -19,6 +19,7 @@
   import {tab} from "./stores";
 
   let theme = "g10";
+  let title;
 
   $: {
     if (window.location.hash === "#create") {
@@ -27,17 +28,20 @@
       $tab = 2;
     } else {
       $tab = 0;
-      window.location.hash = ""
+      window.location.hash = "#home"
     }
   }
 
   $: {
     if ($tab === 0) {
-      window.location.hash = "#"
+      window.location.hash = "#home"
+      title = "Home"
     } else if ($tab === 1) {
       window.location.hash = "#create"
+      title = "Create"
     } else if ($tab === 2) {
       window.location.hash = "#settings"
+      title = "Settings"
     }
   }
 </script>
@@ -49,14 +53,14 @@
       <Row>
         <Column lg="{16}">
           <Breadcrumb noTrailingSlash aria-label="Page navigation">
-            <BreadcrumbItem href="/">Home</BreadcrumbItem>
+            <BreadcrumbItem href="#home">Home</BreadcrumbItem>
             {#if $tab === 1}
               <BreadcrumbItem href="#create">Create</BreadcrumbItem>
             {:else if $tab === 2}
               <BreadcrumbItem href="#settings">Settings</BreadcrumbItem>
             {/if}
           </Breadcrumb>
-          <h1 style="margin-bottom: 1.5rem">View objects</h1>
+          <h1 style="margin-bottom: 1.5rem">{title}</h1>
         </Column>
       </Row>
 
@@ -85,11 +89,6 @@
                 <TabContent {...props}>
                   <Row>
                     <Column md="{4}" lg="{7}">
-                      <p>
-                        Carbon provides styles and components in Vanilla, React,
-                        Angular, Vue and Svelte for anyone building on the web.
-                      </p>
-                      <br>
                       <Select
                               labelText="Carbon theme"
                               bind:selected="{theme}"
