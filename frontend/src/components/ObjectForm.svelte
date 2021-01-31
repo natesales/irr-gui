@@ -57,5 +57,5 @@
         <TextArea labelText="Generated Object" bind:value={generatedObject} />
     </FormGroup>
 
-    <Button type="submit">Submit</Button>
+<!--    <Button type="submit">Submit</Button>-->
 </Form>
