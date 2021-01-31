@@ -20,6 +20,7 @@
 
   let theme = "g10";
   let title;
+  $: document.title = title;
 
   $: {
     if (window.location.hash === "#create") {
