@@ -1,5 +1,5 @@
 <script>
-    import {Button, DataTable, Toolbar, ToolbarContent, Loading, ToolbarSearch, ToolbarMenu, ToolbarMenuItem} from "carbon-components-svelte";
+    import {Button, DataTable, Loading, Toolbar, ToolbarContent, ToolbarMenu, ToolbarMenuItem, ToolbarSearch} from "carbon-components-svelte";
     import CheckmarkOutline20 from "carbon-icons-svelte/lib/CheckmarkOutline20";
     import MisuseOutline20 from "carbon-icons-svelte/lib/MisuseOutline20";
     import {onMount} from "svelte";
@@ -9,8 +9,9 @@
     let searchQuery;
     let filteredObjects = [];
     let showRPKI = true;
+    let showARINWhois = true;
 
-    function fetchObjects(displayRPKI) {
+    function fetchObjects(displayRPKI, displayARINWhois) {
         fetch("/query", {
             method: "POST",
             body: JSON.stringify({
@@ -22,20 +23,22 @@
             .then(data => {
                 let processedObjects = []
                 for (const i in data) {
-                    if(!data[i].source.includes("RPKI")) { // if not source RPKI
+                    if (!data[i].source.includes("RPKI") && !data[i].source.includes("ARIN-WHOIS")) { // if this is a normal object, add it
                         processedObjects.push(data[i])
-                    } else if (displayRPKI) { // if RPKI source and we should display RPKI objects
-                        console.log("showing", data[i].source)
+                    } else if (data[i].source.includes("RPKI") && displayRPKI) { // if RPKI source and we should display RPKI objects, add it
+                        processedObjects.push(data[i])
+                    } else if (data[i].source.includes("ARIN-WHOIS") && displayARINWhois) { // if ARIN-WHOIS source and we should display ARIN-WHOIS objects, add it
                         processedObjects.push(data[i])
                     }
                 }
+
                 objects = processedObjects
                 filteredObjects = processedObjects
             })
     }
 
     onMount(() => fetchObjects())
-    $: fetchObjects(showRPKI)
+    $: fetchObjects(showRPKI, showARINWhois)
 
     $: {
         if (objects && searchQuery) {
@@ -78,9 +81,16 @@
                     <ToolbarMenu>
                         <ToolbarMenuItem primaryFocus on:click={() => {showRPKI = !showRPKI}}>
                             {#if showRPKI}
-                                <MisuseOutline20 />&nbsp;&nbsp;Hide RPKI
+                                <MisuseOutline20/>&nbsp;&nbsp;Hide RPKI
                             {:else}
-                                <CheckmarkOutline20 />&nbsp;&nbsp;Show RPKI
+                                <CheckmarkOutline20/>&nbsp;&nbsp;Show RPKI
+                            {/if}
+                        </ToolbarMenuItem>
+                        <ToolbarMenuItem primaryFocus on:click={() => {showARINWhois = !showARINWhois}}>
+                            {#if showARINWhois}
+                                <MisuseOutline20/>&nbsp;&nbsp;Hide ARIN-WHOIS
+                            {:else}
+                                <CheckmarkOutline20/>&nbsp;&nbsp;Show ARIN-WHOIS
                             {/if}
                         </ToolbarMenuItem>
                     </ToolbarMenu>
