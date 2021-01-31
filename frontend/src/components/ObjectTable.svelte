@@ -37,7 +37,7 @@
             })
     }
 
-    onMount(() => fetchObjects())
+    onMount(() => fetchObjects(true, true)) // show RPKI and ARIN-WHOIS objects by default
     $: fetchObjects(showRPKI, showARINWhois)
 
     $: {
@@ -80,17 +80,17 @@
                     <ToolbarSearch bind:value={searchQuery}/>
                     <ToolbarMenu>
                         <ToolbarMenuItem primaryFocus on:click={() => {showRPKI = !showRPKI}}>
-                            {#if showRPKI}
-                                <MisuseOutline20/>&nbsp;&nbsp;Hide RPKI
+                            {#if !showRPKI}
+                                <MisuseOutline20/>&nbsp;&nbsp;RPKI
                             {:else}
-                                <CheckmarkOutline20/>&nbsp;&nbsp;Show RPKI
+                                <CheckmarkOutline20/>&nbsp;&nbsp;RPKI
                             {/if}
                         </ToolbarMenuItem>
                         <ToolbarMenuItem primaryFocus on:click={() => {showARINWhois = !showARINWhois}}>
-                            {#if showARINWhois}
-                                <MisuseOutline20/>&nbsp;&nbsp;Hide ARIN-WHOIS
+                            {#if !showARINWhois}
+                                <MisuseOutline20/>&nbsp;&nbsp;ARIN-WHOIS
                             {:else}
-                                <CheckmarkOutline20/>&nbsp;&nbsp;Show ARIN-WHOIS
+                                <CheckmarkOutline20/>&nbsp;&nbsp;ARIN-WHOIS
                             {/if}
                         </ToolbarMenuItem>
                     </ToolbarMenu>
