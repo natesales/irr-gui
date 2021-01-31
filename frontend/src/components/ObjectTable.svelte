@@ -1,13 +1,16 @@
 <script>
-    import {Button, DataTable, Toolbar, ToolbarContent, Loading, ToolbarSearch} from "carbon-components-svelte";
+    import {Button, DataTable, Toolbar, ToolbarContent, Loading, ToolbarSearch, ToolbarMenu, ToolbarMenuItem} from "carbon-components-svelte";
+    import CheckmarkOutline20 from "carbon-icons-svelte/lib/CheckmarkOutline20";
+    import MisuseOutline20 from "carbon-icons-svelte/lib/MisuseOutline20";
     import {onMount} from "svelte";
     import {tab} from "../stores";
 
     let objects;
     let searchQuery;
     let filteredObjects = [];
+    let showRPKI = true;
 
-    onMount(() => {
+    function fetchObjects(displayRPKI) {
         fetch("/query", {
             method: "POST",
             body: JSON.stringify({
@@ -17,10 +20,22 @@
         })
             .then(resp => resp.json())
             .then(data => {
-                objects = data
-                filteredObjects = data
+                let processedObjects = []
+                for (const i in data) {
+                    if(!data[i].source.includes("RPKI")) { // if not source RPKI
+                        processedObjects.push(data[i])
+                    } else if (displayRPKI) { // if RPKI source and we should display RPKI objects
+                        console.log("showing", data[i].source)
+                        processedObjects.push(data[i])
+                    }
+                }
+                objects = processedObjects
+                filteredObjects = processedObjects
             })
-    })
+    }
+
+    onMount(() => fetchObjects())
+    $: fetchObjects(showRPKI)
 
     $: {
         if (objects && searchQuery) {
@@ -47,7 +62,6 @@
                     { key: "source", value: "Source"}
                 ]}
                 bind:rows={filteredObjects}
-                sortable
         >
 
             <span slot="cell" let:row let:cell>
@@ -60,13 +74,16 @@
 
             <Toolbar>
                 <ToolbarContent>
-                    <!--                TODO: Implement search -->
                     <ToolbarSearch bind:value={searchQuery}/>
-                    <!--                <ToolbarMenu>-->
-                    <!--                    <ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>-->
-                    <!--                    <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">API documentation</ToolbarMenuItem>-->
-                    <!--                    <ToolbarMenuItem danger>Stop all</ToolbarMenuItem>-->
-                    <!--                </ToolbarMenu>-->
+                    <ToolbarMenu>
+                        <ToolbarMenuItem primaryFocus on:click={() => {showRPKI = !showRPKI}}>
+                            {#if showRPKI}
+                                <MisuseOutline20 />&nbsp;&nbsp;Hide RPKI
+                            {:else}
+                                <CheckmarkOutline20 />&nbsp;&nbsp;Show RPKI
+                            {/if}
+                        </ToolbarMenuItem>
+                    </ToolbarMenu>
                     <Button on:click={() => {tab.set(1)}}>Create object</Button>
                 </ToolbarContent>
             </Toolbar>
