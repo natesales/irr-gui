@@ -48,9 +48,9 @@ def whois(server: str, query: str) -> List[dict]:
             object_maintainers = []
             attributes = obj.split("\n")
             for attr in attributes:
-                attr = attr.split(": ")
+                attr = attr.split(":")
                 k = attr[0]
-                v = attr[1].lstrip(" ")
+                v = ":".join(attr[1:]).lstrip(" ")
                 new_object[k] = v
                 if k == "mnt-by":
                     object_maintainers.append(v)
@@ -73,4 +73,4 @@ async def run_query(query: Query):
     if query.inverse:
         query_str += f"-i {query.inverse} {query.value}"
 
-    return whois("whois.radb.net", query_str.strip(" "))
+    return whois("rr.ntt.net", query_str.strip(" "))
