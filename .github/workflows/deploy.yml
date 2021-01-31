@@ -1,0 +1,47 @@
+on:
+  push:
+    tags:
+      - "v*"
+
+name: Deploy
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Get tag name
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build tag
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/irr-gui:${{ steps.vars.outputs.tag }} .
+
+      - name: Build latest
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/irr-gui:latest .
+
+      - name: Push tag
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/irr-gui:${{ steps.vars.outputs.tag }}
+
+      - name: Push latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/irr-gui:latest
