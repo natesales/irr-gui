@@ -81,6 +81,7 @@
           </Tabs>
         </Column>
       </Row>
+      <p>&copy; Nathan Sales 2021.</p>
     </Grid>
   </Content>
 </Theme>
