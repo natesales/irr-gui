@@ -6,6 +6,8 @@
 
 Web UI for IRR object management.
 
+![Screenshot](screenshot.png)
+
 ### Environment variables
 | Name                | Usage                        |
 | ------------------- | ---------------------------- |
