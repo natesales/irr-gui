@@ -44,7 +44,6 @@ def whois(server: str, query: str) -> List[dict]:
             return []  # No objects found
 
         for obj in objects:
-            print(obj)
             new_object = {}
             object_maintainers = []
             attributes = obj.split("\n")
