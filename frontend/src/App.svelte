@@ -15,6 +15,7 @@
   import Header from "./components/Header.svelte";
   import Theme from "./components/Theme.svelte";
   import ObjectTable from "./components/ObjectTable.svelte";
+  import ObjectForm from "./components/ObjectForm.svelte";
 
   let theme = "g10";
 </script>
@@ -26,18 +27,18 @@
       <Row>
         <Column lg="{16}">
           <Breadcrumb noTrailingSlash aria-label="Page navigation">
-            <BreadcrumbItem href="/">Getting started</BreadcrumbItem>
+            <BreadcrumbItem href="/">IRR-GUI</BreadcrumbItem>
           </Breadcrumb>
-          <h1 style="margin-bottom: 1.5rem">Design &amp; build with Carbon</h1>
+          <h1 style="margin-bottom: 1.5rem">View objects</h1>
         </Column>
       </Row>
 
       <Row>
         <Column noGutter>
           <Tabs aria-label="Tab navigation">
-            <Tab label="About" />
-            <Tab label="Design" />
-            <Tab label="Develop" />
+            <Tab label="Objects" />
+            <Tab label="Create" />
+            <Tab label="Settings" />
             <div slot="content" class="tabbed-content">
               <Grid as fullWidth let:props>
                 <TabContent {...props}>
@@ -49,12 +50,8 @@
                 </TabContent>
                 <TabContent {...props}>
                   <Row>
-                    <Column md="{4}" lg="{7}">
-                      <p>
-                        Rapidly build beautiful and accessible experiences. The
-                        Carbon kit contains all resources you need to get
-                        started.
-                      </p>
+                    <Column>
+                      <ObjectForm/>
                     </Column>
                   </Row>
                 </TabContent>
@@ -65,6 +62,7 @@
                         Carbon provides styles and components in Vanilla, React,
                         Angular, Vue and Svelte for anyone building on the web.
                       </p>
+                      <br>
                       <Select
                               labelText="Carbon theme"
                               bind:selected="{theme}"
