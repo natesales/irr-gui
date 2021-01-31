@@ -68,6 +68,7 @@
 <main>
     {#if objects}
         <DataTable
+                sortable
                 headers={[
                     { key: "custom-primary-key", value: "Primary Key" },
                     { key: "custom-object-type", value: "Type" },
@@ -77,14 +78,6 @@
                 ]}
                 bind:rows={filteredObjects}
         >
-
-            <span slot="cell" let:row let:cell>
-                {#if cell.value === undefined}
-                    None
-                {:else}
-                    {cell.value}
-                {/if}
-            </span>
 
             <Toolbar>
                 <ToolbarContent>

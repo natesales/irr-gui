@@ -71,10 +71,15 @@ def whois(server: str, query: str) -> List[dict]:
                 new_object[k] = v
                 if k == "mnt-by":
                     object_maintainers.append(v)
+
+            if not new_object.get("descr"):
+                new_object["descr"] = ""
+
             new_object["custom-maintainers"] = ",".join(object_maintainers)
             new_object["custom-primary-key"] = new_object[next(iter(new_object))]
             new_object["custom-object-type"] = next(iter(new_object))
             new_object["id"] = secrets.token_hex(16)
+
             _objects.append(new_object)
     finally:
         s.close()
