@@ -1,6 +1,7 @@
 <script>
     import {Button, DataTable, Toolbar, ToolbarContent, Loading, ToolbarSearch} from "carbon-components-svelte";
     import {onMount} from "svelte";
+    import {tab} from "../stores";
 
     let objects;
     let searchQuery;
@@ -66,7 +67,7 @@
                     <!--                    <ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service">API documentation</ToolbarMenuItem>-->
                     <!--                    <ToolbarMenuItem danger>Stop all</ToolbarMenuItem>-->
                     <!--                </ToolbarMenu>-->
-                    <Button>Create object</Button>
+                    <Button on:click={() => {tab.set(1)}}>Create object</Button>
                 </ToolbarContent>
             </Toolbar>
         </DataTable>

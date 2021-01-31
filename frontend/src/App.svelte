@@ -16,8 +16,30 @@
   import Theme from "./components/Theme.svelte";
   import ObjectTable from "./components/ObjectTable.svelte";
   import ObjectForm from "./components/ObjectForm.svelte";
+  import {tab} from "./stores";
 
   let theme = "g10";
+
+  $: {
+    if (window.location.hash === "#create") {
+      $tab = 1;
+    } else if (window.location.hash === "#settings") {
+      $tab = 2;
+    } else {
+      $tab = 0;
+      window.location.hash = ""
+    }
+  }
+
+  $: {
+    if ($tab === 0) {
+      window.location.hash = "#"
+    } else if ($tab === 1) {
+      window.location.hash = "#create"
+    } else if ($tab === 2) {
+      window.location.hash = "#settings"
+    }
+  }
 </script>
 
 <Theme persist bind:theme>
@@ -27,7 +49,12 @@
       <Row>
         <Column lg="{16}">
           <Breadcrumb noTrailingSlash aria-label="Page navigation">
-            <BreadcrumbItem href="/">IRR-GUI</BreadcrumbItem>
+            <BreadcrumbItem href="/">Home</BreadcrumbItem>
+            {#if $tab === 1}
+              <BreadcrumbItem href="#create">Create</BreadcrumbItem>
+            {:else if $tab === 2}
+              <BreadcrumbItem href="#settings">Settings</BreadcrumbItem>
+            {/if}
           </Breadcrumb>
           <h1 style="margin-bottom: 1.5rem">View objects</h1>
         </Column>
@@ -35,7 +62,7 @@
 
       <Row>
         <Column noGutter>
-          <Tabs aria-label="Tab navigation">
+          <Tabs aria-label="Tab navigation" bind:selected={$tab}>
             <Tab label="Objects" />
             <Tab label="Create" />
             <Tab label="Settings" />
