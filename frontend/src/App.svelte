@@ -1,5 +1,5 @@
 <script>
-    import {Breadcrumb, BreadcrumbItem, Column, Content, Grid, Row, Select, SelectItem, Tab, TabContent, Tabs,} from "carbon-components-svelte";
+    import {Breadcrumb, BreadcrumbItem, Column, Content, Grid, Row, Select, SelectItem, Tab, TabContent, Tabs} from "carbon-components-svelte";
     import Header from "./components/Header.svelte";
     import Theme from "./components/Theme.svelte";
     import ObjectTable from "./components/ObjectTable.svelte";
@@ -80,7 +80,7 @@
                                         <Column lg="{7}" md="{4}">
                                             <Select
                                                     bind:selected="{theme}"
-                                                    labelText="Carbon theme"
+                                                    labelText="UI theme"
                                                     style="margin-bottom: 1rem"
                                             >
                                                 <SelectItem text="White" value="white"/>
@@ -88,6 +88,8 @@
                                                 <SelectItem text="Gray 90" value="g90"/>
                                                 <SelectItem text="Gray 100" value="g100"/>
                                             </Select>
+
+                                            <!--                                            <TextInput labelText="Origin" bind:value={$origin}/>-->
                                         </Column>
                                     </Row>
                                 </TabContent>
